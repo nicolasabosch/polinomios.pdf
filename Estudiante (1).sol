@@ -2,26 +2,26 @@ pragma solidity ^0.8.12;
 
 contract Estudiantes{
 
-    string private _nombre;
-    string private _apellido;
+    string private _nombreAlumno;
+    string private _apellidoAlumno;
     string private _curso;
-    address private _docente;
+    address private _profesor;
     mapping(string => uint) private _notas_materias;
     string[] private _Materias;
 
-    constructor(string memory nombre_, string memory apellido_, string memory curso_){
-        _nombre =nombre_;
-        _apellido = apellido_;
+    constructor(string memory nombreAlumno_, string memory apellido_, string memory curso_){
+        _nombreAlumno =nombreAlumno_;
+        _apellidoAlumno = apellido_;
         _curso = curso_;
-        _docente = msg.sender;
+        _profesor = msg.sender;
     }
 
-    function nombre_completo() public view returns(string memory){
-        return string.concat(_nombre, " ", _apellido);
+    function nombreAlumno_completo() public view returns(string memory){
+        return string.concat(_nombreAlumno, " ", _apellidoAlumno);
     }
 
     function apellido() public view returns(string memory){
-        return _apellido;
+        return _apellidoAlumno;
     }
 
     function curso() public view returns(string memory){
@@ -29,7 +29,7 @@ contract Estudiantes{
     }
 
     function set_nota_materia(string memory materia , uint nota) public{
-        require(msg.sender == _docente, "Este valor solo lo puede modificar el docente");
+        require(msg.sender == _profesor, "Este valor solo lo puede modificar el docente");
         _notas_materias[materia] = nota;
         _Materias.push(materia);
 
@@ -64,3 +64,4 @@ contract Estudiantes{
     }
     return _promedio / _Materias.length;
     }
+}
